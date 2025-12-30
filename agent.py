@@ -9,7 +9,7 @@ async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
         llm=openai.LLM(model="gpt-4o-mini"),
         tts=elevenlabs.TTS(
-            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            voice_id="tnSpp4vdxKPjI9w0GnoV",
             model="eleven_turbo_v2_5",
         ),
         stt=openai.STT(model="whisper-1"),

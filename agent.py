@@ -1,27 +1,28 @@
+import os
 from livekit import agents
-from livekit.agents import AgentSession, RoomInputOptions
-from livekit.plugins import hedra, openai, silero
+from livekit.agents import llm, AgentSession, Agent, RoomInputOptions
+from livekit.plugins import openai, elevenlabs, hedra, silero
 
 async def entrypoint(ctx: agents.JobContext):
     await ctx.connect()
 
     session = AgentSession(
-        stt=openai.STT(),
-        llm=openai.LLM(),
-        tts=openai.TTS(),
+        llm=openai.LLM(model="gpt-4o-mini"),
+        tts=elevenlabs.TTS(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            model="eleven_turbo_v2_5",
+        ),
+        stt=openai.STT(model="whisper-1"),
         vad=silero.VAD.load(),
     )
 
-    avatar = hedra.AvatarSession(
-        avatar_id="e269ef68-9a0d-44ce-90c8-9b10cfa3405e",  # Get from Hedra web studio
+    hedra_plugin = hedra.AvatarSession(
+        avatar_id=os.environ.get("c1217e8e-19de-4393-8052-61cafe601c83"),
     )
-
-    await avatar.start(session, room=ctx.room)
 
     await session.start(
         room=ctx.room,
-        participant=ctx.room.remote_participants[0],
-        room_input_options=RoomInputOptions(),
+        agent=Agent(instructions="You are a helpful assistant named Hailey."),
     )
 
 if __name__ == "__main__":

@@ -8,16 +8,20 @@ from livekit.plugins import openai, elevenlabs, hedra, silero
 async def entrypoint(ctx: agents.JobContext):
     await ctx.connect()
     
+    print("Waiting for user to join...")
+    
+    # Wait for a remote participant (the user) to join
+    participant = await ctx.wait_for_participant()
+    
     # Get context from participant metadata
     context = ""
-    for participant in ctx.room.remote_participants.values():
-        if participant.metadata:
-            try:
-                meta = json.loads(participant.metadata)
-                context = meta.get("context", "") or ""
-                print(f"Received context: {context[:100]}...")
-            except json.JSONDecodeError:
-                print("Failed to parse participant metadata")
+    if participant.metadata:
+        try:
+            meta = json.loads(participant.metadata)
+            context = meta.get("context", "") or ""
+            print(f"Received context: {context[:100]}...")
+        except json.JSONDecodeError:
+            print("Failed to parse participant metadata")
     
     # Build instructions with context
     base_instructions = "You are a helpful assistant named Hailey."

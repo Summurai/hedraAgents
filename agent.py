@@ -20,7 +20,7 @@ async def entrypoint(ctx: agents.JobContext):
         avatar_id=os.environ.get("HEDRA_AVATAR_ID"),
     )
 
-    await hedra_plugin.start(session=session, room=ctx.room)
+    await hedra_plugin.start(session, room=ctx.room)
 
     await session.start(
         room=ctx.room,

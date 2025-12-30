@@ -3,6 +3,12 @@ print("ELEVEN_API_KEY present?", bool(os.getenv("ELEVEN_API_KEY")))
 print("ELEVENLABS_API_KEY present?", bool(os.getenv("ELEVENLABS_API_KEY")))
 
 import os
+avatar_id = os.getenv("HEDRA_AVATAR_ID")
+print("HEDRA_AVATAR_ID =", repr(avatar_id))  # should be a non-empty string
+hedra_plugin = hedra.AvatarSession(avatar_id=avatar_id)
+
+
+import os
 from livekit import agents
 from livekit.agents import llm, AgentSession, Agent, RoomInputOptions
 from livekit.plugins import openai, elevenlabs, hedra, silero
@@ -21,7 +27,7 @@ async def entrypoint(ctx: agents.JobContext):
     )
 
     hedra_plugin = hedra.AvatarSession(
-        avatar_id=os.environ.get("c1217e8e-19de-4393-8052-61cafe601c83"),
+        avatar_id=os.environ.get("HEDRA_AVATAR_ID"),
     )
 
     await session.start(

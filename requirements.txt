@@ -1,0 +1,3 @@
+livekit-agents[hedra]~=1.3
+livekit-plugins-openai~=1.0
+python-dotenv

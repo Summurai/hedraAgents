@@ -1,4 +1,8 @@
 import os
+print("ELEVEN_API_KEY present?", bool(os.getenv("ELEVEN_API_KEY")))
+print("ELEVENLABS_API_KEY present?", bool(os.getenv("ELEVENLABS_API_KEY")))
+
+import os
 from livekit import agents
 from livekit.agents import llm, AgentSession, Agent, RoomInputOptions
 from livekit.plugins import openai, elevenlabs, hedra, silero

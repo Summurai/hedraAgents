@@ -1,5 +1,10 @@
 import os
 import json
+
+# Fix ElevenLabs API key name mismatch
+if os.getenv("ELEVEN_API_KEY") and not os.getenv("ELEVENLABS_API_KEY"):
+    os.environ["ELEVENLABS_API_KEY"] = os.environ["ELEVEN_API_KEY"]
+
 from livekit import agents
 from livekit.agents import AgentSession, Agent
 from livekit.plugins import openai, elevenlabs, hedra, silero
